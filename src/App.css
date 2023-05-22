@@ -1,6 +1,6 @@
 .container {
   text-align: center;
-  width: 55%;
+  width: 65%;
   height: 600px;
   margin-top: 70px;
   background-color: rgb(145, 183, 173);
@@ -11,3 +11,4 @@
 form {
   width: 70%;
 }
+
