@@ -7,15 +7,15 @@ const TodoList = () => {
     <>
       <div className='list-todo'>
         <div>
-          <ul class="nav nav-pills">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">ALL</a>
+          <ul className="nav nav-pills">
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="#">ALL</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">ACTIVE</a>
+            <li className="nav-item">
+              <a className="nav-link" href="#">ACTIVE</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">COMPLETED</a>
+            <li className="nav-item">
+              <a className="nav-link" href="#">COMPLETED</a>
             </li>
           </ul>
 
