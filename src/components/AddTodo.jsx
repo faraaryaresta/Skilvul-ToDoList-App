@@ -3,6 +3,7 @@ import { faPen, faTrashCan } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useDispatch, useSelector } from "react-redux"
 import { addTodo } from '../redux/actions/todoAction'
+import Swal from 'sweetalert2';
 
 const AddTodo = () => {
   const dispatch = useDispatch()
@@ -16,9 +17,25 @@ const AddTodo = () => {
       title: inputTodo,
       isDone: false
     }
-
-    dispatch(addTodo(newTodo))
-    setInputTodo("")
+    if (inputTodo.length !== 0) {
+      dispatch(addTodo(newTodo))
+      setInputTodo('')
+        Swal.fire({
+          position: 'top',
+          icon: 'success',
+          title: 'Menambahkan todos',
+          showConfirmButton: false,
+          timer: 1500
+        });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Ada harus mengisi todos terlebih dahulu!',
+      });
+    };
+    // dispatch(addTodo(newTodo))
+    // setInputTodo("")
 }
   return (
     <>
@@ -34,7 +51,6 @@ const AddTodo = () => {
                   type="text" 
                   placeholder='What To Do' 
                   className="form-control input-todo mb-2 mr-sm-2" 
-                  required
                   value={inputTodo} 
                   onChange={e => setInputTodo(e.target.value)}
                 />
@@ -62,8 +78,8 @@ const AddTodo = () => {
             <div className="tab-content" id="pills-tabContent">
               <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
                 <ul className="list-group pt-3 align-items-center">
-                  {todos.map((item, index) => (
-                    <li key={index} className="list-group-item d-flex justify-content-between align-items-center" style={{width: 750}}>
+                  {todos.map(item => (
+                    <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center" style={{width: 750}}>
                       <div className="form-check">
                         <input type="checkbox" className='form-check-input' />
                         <span className="taskText pt-2">{item.title}</span>
@@ -72,7 +88,7 @@ const AddTodo = () => {
                         <button className="btn btn-success m-2" style={{border: "none"}}>
                           <FontAwesomeIcon icon={faPen} />
                         </button>
-                        <button  className="btn btn-danger" style={{border: "none"}}>
+                        <button className="btn btn-danger" style={{border: "none"}}>
                           <FontAwesomeIcon icon={faTrashCan}  />
                         </button>
                       </div>

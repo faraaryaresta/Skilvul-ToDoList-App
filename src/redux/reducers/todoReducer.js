@@ -15,6 +15,7 @@ function todoReducer(state = initialState, action) {
             return {
                 todos: [...state.todos, action.payload]
             }
+        
         default:
             return state;
     }

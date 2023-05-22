@@ -7,4 +7,3 @@ export function addTodo(newTodo) {
         payload: newTodo
     }
 }
-
