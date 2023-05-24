@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { faPen, faTrashCan } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useDispatch, useSelector } from "react-redux"
-import { addTodo } from '../redux/actions/todoAction'
+import { addTodo, deleteTodo } from '../redux/actions/todoAction'
 import Swal from 'sweetalert2';
 
-const AddTodo = () => {
+const AddTodo = ({todo}) => {
   const dispatch = useDispatch()
   const [inputTodo, setInputTodo] = useState("")
   const {todos} = useSelector(state => state)
@@ -36,7 +36,11 @@ const AddTodo = () => {
     };
     // dispatch(addTodo(newTodo))
     // setInputTodo("")
-}
+  }
+
+  // const handleDeleteClick = () => {
+	// 	dispatch(deleteTodo({ todo }));
+	// };
   return (
     <>
       <div className='container shadow pt-4'>
@@ -88,7 +92,7 @@ const AddTodo = () => {
                         <button className="btn btn-success m-2" style={{border: "none"}}>
                           <FontAwesomeIcon icon={faPen} />
                         </button>
-                        <button className="btn btn-danger" style={{border: "none"}}>
+                        <button onClick={() => dispatch(deleteTodo(item))} className="btn btn-danger" style={{border: "none"}}>
                           <FontAwesomeIcon icon={faTrashCan}  />
                         </button>
                       </div>
