@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useDispatch, useSelector } from "react-redux"
 import { addTodo, deleteTodo, completedTodo, editTodo } from '../redux/actions/todoAction'
 import Swal from 'sweetalert2';
+import notfound from "../assets/notfound.png"
 
 const AddTodo = () => {
   const dispatch = useDispatch()
@@ -140,27 +141,45 @@ const AddTodo = () => {
             <div className="tab-content" id="pills-tabContent">
               <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
                 <ul className="list-group pt-3 align-items-center">
-                  {todos.map(item => (
-                    <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center" style={{width: 750}}>
-                      <div className="form-check">
-                        <input type="checkbox" 
-                          checked={item.completed} 
-                          onChange={() => handleCompleteClick(item)}
-                          className='form-check-input' />
-                        <span className={item.completed ? "text-decoration-line-through" : ""}>
-                          {item.title}
-                        </span>
-                      </div>
-                      <div className="iconsWrap">
-                        <button className="btn btn-success m-2" style={{border: "none"}}>
-                          <FontAwesomeIcon onClick={() => updateHandler(item.id, item.title)} icon={faPen} />
-                        </button>
-                        <button onClick={() => dispatch(deleteTodo(item))} className="btn btn-danger" style={{border: "none"}}>
-                          <FontAwesomeIcon icon={faTrashCan}  />
-                        </button>
-                      </div>
-                    </li>
-                  ))}
+                  {todos.length !== 0 ?
+                    todos.map((item) => {
+                      return (
+                        <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center" style={{width: 750}}>
+                        <div className="form-check">
+                          <input type="checkbox" 
+                            checked={item.completed} 
+                            onChange={() => handleCompleteClick(item)}
+                            className='form-check-input' />
+                          <span className={item.completed ? "text-decoration-line-through" : ""}>
+                            {item.title}
+                          </span>
+                        </div>
+                        <div className="iconsWrap">
+                          <button className="btn btn-success m-2" style={{border: "none"}}>
+                            <FontAwesomeIcon onClick={() => updateHandler(item.id, item.title)} icon={faPen} />
+                          </button>
+                          <button onClick={() => dispatch(deleteTodo(item))} className="btn btn-danger" style={{border: "none"}}>
+                            <FontAwesomeIcon icon={faTrashCan}  />
+                          </button>
+                        </div>
+                      </li>
+                      )
+                    }) : 
+                      <>
+                        <div className='data-kosong'>     
+                          <div className='justify-content-center'>
+                            <img src={notfound}  
+                              className="mx-auto d-block" 
+                              alt="notfound"
+                              style={{width: 200}}
+                            />
+                            <h5 className='text-gray-dark text-sm text-center pt-2'>No ToDo List</h5>
+                          </div>   
+                        </div>
+                      </>
+                    }
+                   
+                  
                 </ul>
               </div>
               <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">...</div>
