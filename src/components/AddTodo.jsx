@@ -2,24 +2,27 @@ import React, { useState } from 'react'
 import { faPen, faTrashCan } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useDispatch, useSelector } from "react-redux"
-import { addTodo, deleteTodo } from '../redux/actions/todoAction'
+import { addTodo, deleteTodo, completedTodo, editTodo } from '../redux/actions/todoAction'
 import Swal from 'sweetalert2';
 
-const AddTodo = ({todo}) => {
+const AddTodo = () => {
   const dispatch = useDispatch()
   const [inputTodo, setInputTodo] = useState("")
+  const [editTodolist, setEditTodolist] = useState(null)
   const {todos} = useSelector(state => state)
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const newTodo = {
-      id: Date.now(),
-      title: inputTodo,
-      isDone: false
-    }
+    
     if (inputTodo.length !== 0) {
-      dispatch(addTodo(newTodo))
-      setInputTodo('')
+      if (!editTodolist) {
+        const newTodo = {
+          id: Date.now(),
+          title: inputTodo,
+          completed: false
+        }
+        dispatch(addTodo(newTodo))
+        setInputTodo("")
         Swal.fire({
           position: 'top',
           icon: 'success',
@@ -27,20 +30,60 @@ const AddTodo = ({todo}) => {
           showConfirmButton: false,
           timer: 1500
         });
+      } else {
+        editTodolist.title = inputTodo
+        dispatch(editTodo(editTodolist))
+        Swal.fire({
+          position: 'top',
+          icon: 'success',
+          title: 'Edit todos sukses',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
     } else {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Ada harus mengisi todos terlebih dahulu!',
+        text: 'Anda harus mengisi todos terlebih dahulu!',
       });
-    };
+    }
+  }
+    
+    // if (inputTodo.length !== 0) {
+    //   dispatch(addTodo(newTodo))
+    //   setInputTodo('')
+    //     Swal.fire({
+    //       position: 'top',
+    //       icon: 'success',
+    //       title: 'Menambahkan todos',
+    //       showConfirmButton: false,
+    //       timer: 1500
+    //     });
+    // } else {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Oops...',
+    //     text: 'Anda harus mengisi todos terlebih dahulu!',
+    //   });
+    // };
     // dispatch(addTodo(newTodo))
     // setInputTodo("")
-  }
+  
 
   // const handleDeleteClick = () => {
 	// 	dispatch(deleteTodo({ todo }));
 	// };
+
+  const handleCompleteClick = (item) => {
+    dispatch(completedTodo(item))
+  }
+  
+  const updateHandler = (id, title) => {
+    setInputTodo(title)
+    setEditTodolist({id, title})
+  }
+
   return (
     <>
       <div className='container shadow pt-4'>
@@ -60,7 +103,22 @@ const AddTodo = ({todo}) => {
                 />
               </div>
               <div className="col-md-2">
-                  <button type='submit' className='btn btn-primary w-100'>Add</button>
+                {editTodolist ? (
+                  <button 
+                    type='submit' 
+                    className='btn btn-success w-100'
+                  >
+                    Update
+                  </button>
+                ) : (
+                  <button 
+                    type='submit' 
+                    className='btn btn-primary w-100'
+                  >
+                    Add
+                  </button>
+                )}
+                  
               </div>
             </div>
           </form>
@@ -85,12 +143,17 @@ const AddTodo = ({todo}) => {
                   {todos.map(item => (
                     <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center" style={{width: 750}}>
                       <div className="form-check">
-                        <input type="checkbox" className='form-check-input' />
-                        <span className="taskText pt-2">{item.title}</span>
+                        <input type="checkbox" 
+                          checked={item.completed} 
+                          onChange={() => handleCompleteClick(item)}
+                          className='form-check-input' />
+                        <span className={item.completed ? "text-decoration-line-through" : ""}>
+                          {item.title}
+                        </span>
                       </div>
                       <div className="iconsWrap">
                         <button className="btn btn-success m-2" style={{border: "none"}}>
-                          <FontAwesomeIcon icon={faPen} />
+                          <FontAwesomeIcon onClick={() => updateHandler(item.id, item.title)} icon={faPen} />
                         </button>
                         <button onClick={() => dispatch(deleteTodo(item))} className="btn btn-danger" style={{border: "none"}}>
                           <FontAwesomeIcon icon={faTrashCan}  />
