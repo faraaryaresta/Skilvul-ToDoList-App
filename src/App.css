@@ -1,5 +1,4 @@
 body {
-  background-color: #FFFF;
   font-family: sans-serif;
 }
 
@@ -11,6 +10,11 @@ body {
   background-color: rgb(213, 214, 219);
   border-radius: 10px;
  
+}
+
+.item-todo {
+  width: 72%;
+  margin: 0 auto;
 }
 
 form {

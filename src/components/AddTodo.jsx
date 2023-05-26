@@ -46,8 +46,10 @@ const AddTodo = () => {
       switch (filterTodo?.type) {
         case "ACTIVE" : 
           dispatch(filterAktiveTodo(todos))
+          break
         case "COMPLETED" :
           dispatch(filterCompletedTodo(todos))
+          break
       } 
     } else {
       Swal.fire({
@@ -126,7 +128,7 @@ const AddTodo = () => {
 
         <div className='list-todo pt-4'>
           <div className='item-todo'>
-            <ul className="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+            <ul className="nav nav-pills mb-3 d-flex justify-content-center" id="pills-tab" role="tablist">
               <li className="nav-item" role="presentation">
                 <button 
                   className="nav-link active" 
@@ -168,11 +170,11 @@ const AddTodo = () => {
             </ul>
             <div className="tab-content" id="pills-tabContent">
               <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-                <ul className="list-group pt-2 align-items-center">
+                <ul className="list-group pt-2 d-flex justify-content-center ">
                   {todos.length !== 0 ?
                     todos.map((item) => 
                        (
-                        <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center" style={{width: 750}}>
+                        <li key={item.id} className="list-group-item w-100 d-flex justify-content-between align-items-center" style={{width: 750}}>
                         <div className="form-check">
                           <input type="checkbox" 
                             checked={item.completed} 
@@ -218,17 +220,17 @@ const AddTodo = () => {
                 </ul>
               </div>
               <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-              <ul className="list-group pt-2 align-items-center">
+              <ul className="list-group pt-2 d-flex justify-content-center ">
                   {filter.length !== 0 ?
                     filter.map((item) => 
                        (
-                        <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center" style={{width: 750}}>
+                        <li key={item.id} className="list-group-item w-100 d-flex justify-content-between align-items-center" style={{width: 750}}>
                         <div className="form-check">
                           <input type="checkbox" 
-                            checked={item.completed} 
-                            onChange={() => {handleCompleteClick(item)
-                              dispatch(filterAktiveTodo(todos))
-                            }}
+                              checked={item.completed} 
+                              onChange={() => {handleCompleteClick(item)
+                                dispatch(filterAktiveTodo(todos))
+                              }}
                             className='form-check-input' 
                             style={{cursor: "pointer"}}/>
                           <span className={item.completed ? "text-decoration-line-through" : ""}>
@@ -275,11 +277,11 @@ const AddTodo = () => {
                 </ul>
               </div>
               <div className="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
-              <ul className="list-group pt-2 align-items-center">
+              <ul className="list-group pt-2 d-flex justify-content-center ">
                   {filter.length !== 0 ?
                     filter.map((item) => 
                        (
-                        <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center" style={{width: 750}}>
+                        <li key={item.id} className="list-group-item w-100 d-flex justify-content-between align-items-center" style={{width: 750}}>
                         <div className="form-check">
                           <input type="checkbox" 
                             checked={item.completed} 
