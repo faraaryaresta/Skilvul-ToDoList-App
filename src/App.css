@@ -1,15 +1,26 @@
-.container {
-  text-align: center;
+body {
+  background-color: #FFFF;
+  font-family: sans-serif;
+}
+
+.todolist {
   width: 65%;
-  height: 600px;
-  margin-top: 70px;
-  /* background-color: rgb(145, 183, 173); */
-  background-color: rgb(187, 207, 225);
-  border-radius: 20px;
-  padding: 10px 10px 10px 22px;
+  height: auto;
+  margin-top: 80px;
+  padding-bottom: 50px;
+  background-color: rgb(213, 214, 219);
+  border-radius: 10px;
+ 
 }
 
 form {
-  width: 70%;
+  width: 60%;
+}
+
+
+@media screen and (max-width: 783px) {
+  .todolist {
+    width: 85%
+  }
 }
 
